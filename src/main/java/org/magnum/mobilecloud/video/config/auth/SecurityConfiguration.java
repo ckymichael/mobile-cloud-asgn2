@@ -1,4 +1,4 @@
-package org.magnum.mobilecloud.video.auth;
+package org.magnum.mobilecloud.video.config.auth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -26,6 +27,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
      *
      * https://spring.io/guides/topicals/spring-security-architecture
      */
+    private  static  final  String[]  AUTH_WHITELIST  =  {
+            // -- swagger ui
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/swagger-ui/**",
+            "/swagger-ui/index.html"
+    };
+
     @Value("${users.user1.name}")
     private String user1;
 
@@ -50,6 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login", "/oauth/authorize")
                 .and()
                 .authorizeRequests()
+//                .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll();
@@ -71,5 +83,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(AUTH_WHITELIST);
     }
 }

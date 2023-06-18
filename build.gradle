@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
 
     implementation("org.apache.httpcomponents:httpclient:4.5.6")
     implementation("com.google.guava:guava:17.0")
@@ -45,12 +46,15 @@ dependencies {
 
     implementation("junit:junit")
 
+    compileOnly("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
+
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}

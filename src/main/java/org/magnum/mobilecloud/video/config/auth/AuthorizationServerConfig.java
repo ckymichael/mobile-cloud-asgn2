@@ -1,4 +1,4 @@
-package org.magnum.mobilecloud.video.auth;
+package org.magnum.mobilecloud.video.config.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
